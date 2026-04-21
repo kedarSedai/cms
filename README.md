@@ -29,4 +29,15 @@ Vercel must use the folder that contains **`next`** in `package.json` — that i
 
 3. **Remove any root `vercel.json`** from this repo if you still have an old copy that sets `installCommand` / `buildCommand` / `framework` from the repo root — with Root Directory `frontend`, those paths would be wrong.
 
-Commit and push: `frontend/package-lock.json` (if present), `frontend/package.json`, and the rest of the app under `frontend/`.
+Commit and push: **`frontend/package-lock.json`** (required for reproducible installs), `frontend/package.json`, `frontend/vercel.json`, and the rest of the app under `frontend/`.
+
+### Still seeing `next: command not found` (exit 127)?
+
+1. **Root Directory** must be **`frontend`** (the folder that contains `package.json` with `"next"` in it). If it is the repo root, `npm install` never installs Next for the app Vercel builds.
+
+2. **Commit `frontend/package-lock.json` to Git.** On a fresh clone, `npm install` needs that file. Confirm locally:  
+   `git ls-files frontend/package-lock.json` should print one line.
+
+3. In Vercel **Build & Development Settings**, clear **Install Command** and **Build Command** overrides unless you pasted the values from `frontend/vercel.json` intentionally. A wrong or empty install step leaves `node_modules` empty.
+
+4. Build scripts call Next via **`node ./node_modules/next/dist/bin/next build`** so the build does not depend on the `next` shell shim in `node_modules/.bin`.
