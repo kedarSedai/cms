@@ -1,11 +1,14 @@
 {
   "name": "rising-mvps",
   "private": true,
-  "description": "Monorepo layout: run npm install in frontend/. Backend/ holds future Strapi or API.",
+  "description": "Monorepo: Next.js app is the `frontend` workspace. Run `npm install` from repo root (installs all workspaces).",
+  "workspaces": [
+    "frontend"
+  ],
   "scripts": {
-    "dev": "npm run dev --prefix frontend",
-    "build": "npm run build --prefix frontend",
-    "start": "npm run start --prefix frontend",
-    "lint": "npm run lint --prefix frontend"
+    "dev": "npm run dev -w ryan",
+    "build": "npm run build -w ryan",
+    "start": "npm run start -w ryan",
+    "lint": "npm run lint -w ryan"
   }
 }
