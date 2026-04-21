@@ -18,6 +18,11 @@ const nunito = Nunito({
   display: "swap",
 });
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
+
 export const metadata = {
   metadataBase: new URL(site.url),
   title: {
@@ -51,11 +56,11 @@ export default function RootLayout({ children }) {
       className={`${dmSans.variable} ${nunito.variable} h-full`}
       suppressHydrationWarning
     >
-      <body className="flex min-h-full flex-col bg-[var(--cream)] text-[var(--ink)] antialiased">
+      <body className="flex min-h-full min-w-0 flex-col overflow-x-hidden bg-[var(--cream)] text-[var(--ink)] antialiased">
         <AppThemeProvider>
           <SkipLink />
           <SiteHeader />
-          <div className="flex flex-1 flex-col">{children}</div>
+          <div className="flex min-w-0 flex-1 flex-col">{children}</div>
           <SiteFooter />
         </AppThemeProvider>
       </body>

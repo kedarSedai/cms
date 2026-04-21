@@ -36,24 +36,24 @@ export function SiteHeader() {
   const closeMenu = () => setOpen(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-[var(--border)] bg-[var(--header-bg)] text-[var(--header-fg)] shadow-sm">
-      <Container wide className="flex h-14 items-center justify-between gap-3 sm:h-16">
+    <header className="sticky top-0 z-50 min-w-0 border-b border-[var(--border)] bg-[var(--header-bg)] text-[var(--header-fg)] shadow-sm">
+      <Container wide className="flex h-14 min-w-0 items-center justify-between gap-2 sm:h-16 sm:gap-3">
         <Link
           href="/"
           onClick={closeMenu}
-          className="font-heading text-lg font-bold tracking-tight text-[var(--header-fg)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
+          className="shrink-0 font-heading text-base font-bold tracking-tight text-[var(--header-fg)] sm:text-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
         >
           {site.name}
         </Link>
         <nav
-          className="hidden items-center gap-0.5 lg:flex"
+          className="hidden min-w-0 flex-1 items-center justify-center gap-0.5 overflow-x-auto whitespace-nowrap px-1 text-xs lg:flex lg:text-[11px] xl:text-sm"
           aria-label="Primary"
         >
           {mainNav.map((item) => (
             <NavLink key={item.href} {...item} onNavigate={closeMenu} />
           ))}
         </nav>
-        <div className="hidden items-center gap-2 lg:flex">
+        <div className="hidden shrink-0 items-center gap-2 lg:flex">
           <ThemeToggle />
           <ButtonLink
             href="/get-involved"

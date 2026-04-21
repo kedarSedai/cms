@@ -9,42 +9,85 @@
 cd frontend && npm install && npm run dev
 ```
 
-Or from repo root: `npm install --prefix frontend` then `npm run dev --prefix frontend`.
+Open [http://localhost:3000](http://localhost:3000).
 
-## Vercel
+---
 
-Vercel must use the folder that contains **`next`** in `package.json` — that is **`frontend/`**, not the monorepo root.
+## Deploy to Vercel (from scratch)
 
-### Required settings
+Follow these in order. The app lives in **`frontend/`**; Vercel must treat **`frontend`** as the project root.
 
-1. **Project → Settings → General → Root Directory**  
-   Set to: **`frontend`**
+### 1. Prepare GitHub
 
-2. **Project → Settings → Build & Development Settings**  
-   - **Framework Preset**: **Next.js** (or Auto).  
-   - **Build Command**: **default** (empty) — Vercel runs `next build` via the Next preset.  
-   - **Install Command**: **default** (empty) — Vercel runs `npm install` in `frontend/`.  
-   - **Output Directory**: **empty** — do not set `public` or `.next` manually.
+1. Create a repository (e.g. `CMS` or `rising-mvps`) if you don’t have one yet.
+2. From your machine, in the **monorepo root** (folder that contains `frontend/`):
 
-3. **Do not commit a `frontend/vercel.json`** that overrides install/build unless you know you need it. Custom commands can finish “successfully” but skip Vercel’s Next.js output wiring and cause **`404 NOT_FOUND`** on every route.
+   ```bash
+   git init
+   git add frontend package.json README.md .gitignore
+   git add backend
+   git commit -m "Initial commit: Next.js frontend"
+   git branch -M main
+   git remote add origin https://github.com/YOUR_USER/YOUR_REPO.git
+   git push -u origin main
+   ```
 
-4. **Do not** keep an old **`vercel.json` at the repo root** that points at the wrong folder.
+3. Confirm **`frontend/package-lock.json`** is committed (Vercel needs it for `npm install`):
 
-Commit: **`frontend/package-lock.json`**, **`frontend/package.json`**, and everything under **`frontend/src`**, **`frontend/public`**, **`frontend/next.config.mjs`**, etc.
+   ```bash
+   git ls-files frontend/package-lock.json
+   ```
 
-### Build works but site shows `404: NOT_FOUND` (Vercel)
+   You should see: `frontend/package-lock.json`
 
-1. **Confirm Root Directory is `frontend` and Framework is Next.js** (see above). Wrong preset deploys as a static site and `/` won’t hit the Next handler.
+4. Do **not** add a **`vercel.json`** at the repo root unless you know you need it. Do **not** add **`frontend/vercel.json`** unless you have a special case—defaults work best with Next.js on Vercel.
 
-2. **Git → Production Branch** (e.g. `main`) must be what you push to. Under **Deployments**, the deployment for **Production** should be **Ready** (not only a Preview on another branch).
+### 2. Create the Vercel project
 
-3. **Deployment Protection** (Settings → Deployment Protection): try **turning protection off** temporarily. Some setups only allow access after login; misconfiguration can look like a dead site.
+1. Go to [vercel.com](https://vercel.com) and sign in (GitHub is easiest).
+2. **Add New… → Project**.
+3. **Import** your GitHub repository.
+4. Before you click **Deploy**, open **Configure Project** (or “Edit” next to the framework row).
 
-4. Open the URL from the **Deployments** list (“Visit” on the latest deployment) to rule out a wrong or stale **`.vercel.app`** alias.
+### 3. Critical settings (do this before the first deploy)
 
-### `next: command not found` (exit 127)
+| Setting | Value |
+|--------|--------|
+| **Root Directory** | `frontend` — click “Edit”, type `frontend`, save. This folder must contain `package.json` with `"next"` in it. |
+| **Framework Preset** | **Next.js** (or leave **Auto** after Root Directory is set). |
+| **Build Command** | Leave **empty** (default). |
+| **Install Command** | Leave **empty** (default). |
+| **Output Directory** | Leave **empty**. Do **not** set `public` or `.next`. |
 
-1. Root Directory **`frontend`**.  
-2. Commit **`frontend/package-lock.json`**: `git ls-files frontend/package-lock.json` should print one line.  
-3. Clear custom Install / Build overrides in Vercel.  
-4. `package.json` uses **`node ./node_modules/next/dist/bin/next build`** so `PATH` does not need the `next` shim.
+Optional: **Node.js Version** — pick **20.x** or newer (matches `engines` in `frontend/package.json`).
+
+### 4. Deploy
+
+1. Click **Deploy**.
+2. Wait for **Build** to finish (logs should show `next build` and routes under `frontend`).
+3. When it’s **Ready**, use **Visit** on that deployment to open the site.
+
+Your production URL will look like `your-project-name.vercel.app`.
+
+### 5. After the first successful deploy
+
+- **Production branch**: **Settings → Git → Production Branch** — usually **`main`**. Pushes to that branch update production.
+- **Custom domain** (later): **Settings → Domains** — add your domain and follow DNS instructions.
+- **Deployment Protection** (optional): **Settings → Deployment Protection** — if enabled, visitors may need to log in; turn off while testing if URLs act “broken.”
+
+### If the build fails
+
+- **`next: command not found`**: Root Directory must be **`frontend`**, and **`frontend/package-lock.json`** must be in Git. Clear any custom Install/Build commands in Vercel.
+- **Wrong framework**: Set **Framework** to **Next.js** and clear **Output Directory**.
+
+### If the build succeeds but the site is `404 NOT_FOUND`
+
+- Root Directory is still wrong, **Framework** isn’t Next.js, or **Output Directory** was set manually — fix per the table above and redeploy.
+- Open **Visit** from the **Deployments** tab for that exact build (not an old bookmark).
+- Temporarily disable **Deployment Protection** to test.
+
+---
+
+### `next: command not found` (detail)
+
+`frontend/package.json` runs Next via **`node ./node_modules/next/dist/bin/next …`** so the build does not rely on the `next` binary being on `PATH`. Install must still run in **`frontend/`** (correct Root Directory + lockfile).

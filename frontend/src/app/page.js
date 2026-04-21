@@ -36,23 +36,26 @@ export default function HomePage() {
   const sidebarPress = pressItems.slice(0, 2);
 
   return (
-    <main id="main" className="min-w-0">
+    <main id="main" className="min-w-0 overflow-x-hidden">
       {/* Top strip — dense utility bar (sports-club style) */}
-      <div className="border-b border-[var(--border)] bg-[var(--surface)] text-xs text-[var(--ink-soft)]">
+      <div className="min-w-0 border-b border-[var(--border)] bg-[var(--surface)] text-xs text-[var(--ink-soft)]">
         <Container
           wide
-          className="flex flex-wrap items-center justify-between gap-2 py-2"
+          className="flex flex-col gap-2 py-2 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-x-2"
         >
-          <div className="flex flex-wrap gap-x-4 gap-y-1">
-            <a className="hover:text-[var(--accent)]" href={`mailto:${site.email}`}>
+          <div className="flex min-w-0 flex-col gap-1 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-3">
+            <a
+              className="min-w-0 break-all hover:text-[var(--accent)] sm:break-words"
+              href={`mailto:${site.email}`}
+            >
               {site.email}
             </a>
-            <span className="hidden sm:inline" aria-hidden>
+            <span className="hidden text-[var(--ink-muted)] sm:inline" aria-hidden>
               ·
             </span>
-            <span>{site.phone}</span>
+            <span className="shrink-0">{site.phone}</span>
           </div>
-          <div className="flex flex-wrap gap-3 font-medium">
+          <div className="flex flex-shrink-0 flex-wrap gap-x-3 gap-y-1 font-medium">
             <Link className="hover:text-[var(--accent)]" href="/events">
               Events
             </Link>
@@ -67,13 +70,13 @@ export default function HomePage() {
       </div>
 
       {/* Hero + sidebar widgets */}
-      <section className="border-b border-[var(--border)] bg-[var(--surface-2)] py-6 sm:py-8">
-        <Container wide>
-          <div className="grid gap-6 xl:grid-cols-12">
-            <div className="flex flex-col gap-5 xl:col-span-8">
-              <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm sm:p-7">
+      <section className="min-w-0 border-b border-[var(--border)] bg-[var(--surface-2)] py-6 sm:py-8">
+        <Container wide className="min-w-0">
+          <div className="grid min-w-0 gap-6 xl:grid-cols-12">
+            <div className="flex min-w-0 flex-col gap-5 xl:col-span-8">
+              <div className="min-w-0 rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-sm sm:p-7">
                 <MiniMeta>Nonprofit · Founded by {site.founder}</MiniMeta>
-                <h1 className="mt-2 font-heading text-3xl font-extrabold leading-tight tracking-tight text-[var(--ink)] sm:text-4xl lg:text-5xl">
+                <h1 className="mt-2 hyphens-auto break-words font-heading text-2xl font-extrabold leading-tight tracking-tight text-[var(--ink)] sm:text-3xl md:text-4xl lg:text-5xl">
                   Youth sports, music, and service—rising together in every
                   neighborhood.
                 </h1>
@@ -82,35 +85,35 @@ export default function HomePage() {
                   on the left, live widgets on the right, then full-width grids so the
                   page feels full and scannable.
                 </p>
-                <div className="mt-5 flex flex-wrap gap-2">
-                  <ButtonLink href={site.donateUrl} external>
+                <div className="mt-5 flex min-w-0 flex-wrap gap-2">
+                  <ButtonLink href={site.donateUrl} external className="max-w-full text-center">
                     Donate (secure link)
                   </ButtonLink>
-                  <ButtonLink href="/get-involved" variant="secondary">
+                  <ButtonLink href="/get-involved" variant="secondary" className="max-w-full text-center">
                     Get involved
                   </ButtonLink>
-                  <ButtonLink href="/resources" variant="ghost" className="!px-3">
+                  <ButtonLink href="/resources" variant="ghost" className="max-w-full !px-3 text-center">
                     Parent resources →
                   </ButtonLink>
                 </div>
-                <p className="mt-3 text-[11px] text-[var(--ink-muted)]">
-                  Set <code className="rounded bg-[var(--code-bg)] px-1">NEXT_PUBLIC_DONATE_URL</code> or edit{" "}
-                  <code className="rounded bg-[var(--code-bg)] px-1">frontend/src/data/site.js</code>.
+                <p className="mt-3 break-words text-[11px] text-[var(--ink-muted)]">
+                  Set <code className="break-all rounded bg-[var(--code-bg)] px-1">NEXT_PUBLIC_DONATE_URL</code> or edit{" "}
+                  <code className="break-all rounded bg-[var(--code-bg)] px-1">src/data/site.js</code>.
                 </p>
               </div>
-              <div className="relative aspect-[21/10] min-h-[200px] overflow-hidden rounded-xl border border-[var(--border)] shadow-md">
+              <div className="relative aspect-[4/3] min-h-[180px] w-full max-w-full overflow-hidden rounded-xl border border-[var(--border)] shadow-md sm:aspect-[21/10] sm:min-h-[200px]">
                 <Image
                   src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1600&q=80"
                   alt="Diverse group of young people laughing together outdoors"
                   fill
                   className="object-cover"
-                  sizes="(max-width: 1280px) 100vw, 66vw"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1280px) 100vw, 66vw"
                   priority
                 />
               </div>
             </div>
 
-            <aside className="flex flex-col gap-3 xl:col-span-4">
+            <aside className="flex min-w-0 flex-col gap-3 xl:col-span-4">
               <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-sm">
                 <MiniMeta>Give</MiniMeta>
                 <p className="mt-1 font-heading text-lg font-bold text-[var(--ink)]">
@@ -164,7 +167,7 @@ export default function HomePage() {
                     <li key={post.id} className="py-2 first:pt-0 last:pb-0">
                       <Link
                         href={`/blog/${post.slug}`}
-                        className="group flex gap-3 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent)]"
+                        className="group flex min-w-0 gap-3 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent)]"
                       >
                         <div className="relative h-14 w-20 shrink-0 overflow-hidden rounded-md border border-[var(--border)]">
                           <Image
@@ -196,7 +199,7 @@ export default function HomePage() {
                     <li key={p.id}>
                       <Link
                         href={`/press/${p.slug}`}
-                        className="text-xs font-semibold text-[var(--ink)] hover:text-[var(--accent)]"
+                        className="break-words text-xs font-semibold text-[var(--ink)] hover:text-[var(--accent)]"
                       >
                         {p.title}
                       </Link>
@@ -211,9 +214,9 @@ export default function HomePage() {
       </section>
 
       {/* Dense 3-column band: service + blog list + voices */}
-      <section className="border-b border-[var(--border)] bg-[var(--surface)] py-8">
-        <Container wide>
-          <div className="grid gap-6 lg:grid-cols-12">
+      <section className="min-w-0 border-b border-[var(--border)] bg-[var(--surface)] py-8">
+        <Container wide className="min-w-0">
+          <div className="grid min-w-0 gap-6 lg:grid-cols-12">
             <div className="lg:col-span-4">
               <h2 className="border-b border-[var(--border)] pb-2 font-heading text-lg font-bold text-[var(--ink)]">
                 Service in motion
@@ -222,7 +225,7 @@ export default function HomePage() {
                 {serviceProjects.map((p) => (
                   <article
                     key={p.id}
-                    className="flex gap-3 rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-3"
+                    className="flex min-w-0 gap-3 rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-3"
                   >
                     <div className="relative h-20 w-24 shrink-0 overflow-hidden rounded-md">
                       <Image
@@ -258,7 +261,7 @@ export default function HomePage() {
                   <Link
                     key={post.id}
                     href={`/blog/${post.slug}`}
-                    className="flex gap-3 rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-3 transition hover:border-[var(--accent)]"
+                    className="flex min-w-0 gap-3 rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-3 transition hover:border-[var(--accent)]"
                   >
                     <div className="relative hidden h-24 w-32 shrink-0 overflow-hidden rounded-md sm:block">
                       <Image
@@ -330,9 +333,9 @@ export default function HomePage() {
       </section>
 
       {/* Schedule table — fills width */}
-      <section className="bg-[var(--surface-2)] py-8">
-        <Container wide>
-          <div className="mb-4 flex flex-wrap items-end justify-between gap-3 border-b border-[var(--border)] pb-3">
+      <section className="min-w-0 bg-[var(--surface-2)] py-8">
+        <Container wide className="min-w-0">
+          <div className="mb-4 flex min-w-0 flex-wrap items-end justify-between gap-3 border-b border-[var(--border)] pb-3">
             <h2 className="font-heading text-xl font-bold text-[var(--ink)]">
               Schedule &amp; results
             </h2>
@@ -343,15 +346,15 @@ export default function HomePage() {
               View all events
             </Link>
           </div>
-          <div className="overflow-x-auto rounded-lg border border-[var(--border)] bg-[var(--surface)]">
-            <table className="w-full min-w-[640px] text-left text-sm">
+          <div className="max-w-full overflow-x-auto rounded-lg border border-[var(--border)] bg-[var(--surface)] [-webkit-overflow-scrolling:touch]">
+            <table className="w-full min-w-[min(100%,36rem)] table-fixed text-left text-xs sm:min-w-[40rem] sm:text-sm md:table-auto md:min-w-[640px]">
               <thead className="border-b border-[var(--border)] bg-[var(--surface-2)] text-[10px] font-semibold uppercase tracking-wide text-[var(--ink-muted)]">
                 <tr>
-                  <th className="px-3 py-2">Status</th>
-                  <th className="px-3 py-2">When</th>
-                  <th className="px-3 py-2">Event</th>
-                  <th className="px-3 py-2">Location</th>
-                  <th className="px-3 py-2 text-right"> </th>
+                  <th className="w-[12%] px-2 py-2 sm:px-3">Status</th>
+                  <th className="w-[22%] px-2 py-2 sm:px-3">When</th>
+                  <th className="px-2 py-2 sm:px-3">Event</th>
+                  <th className="hidden px-2 py-2 sm:table-cell sm:px-3">Location</th>
+                  <th className="w-[10%] px-2 py-2 text-right sm:px-3"> </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[var(--border)]">
@@ -359,7 +362,7 @@ export default function HomePage() {
                   const past = isPastEvent(e.startDate);
                   return (
                     <tr key={e.id} className="hover:bg-[var(--surface-2)]">
-                      <td className="px-3 py-2">
+                      <td className="px-2 py-2 sm:px-3">
                         <span
                           className={`inline-block rounded px-2 py-0.5 text-[10px] font-bold uppercase ${
                             past
@@ -370,14 +373,16 @@ export default function HomePage() {
                           {past ? "Past" : "Upcoming"}
                         </span>
                       </td>
-                      <td className="whitespace-nowrap px-3 py-2 text-xs text-[var(--ink-soft)]">
+                      <td className="break-words px-2 py-2 text-[10px] leading-snug text-[var(--ink-soft)] sm:whitespace-nowrap sm:px-3 sm:text-xs">
                         {formatDateTimeRange(e.startDate, e.endDate)}
                       </td>
-                      <td className="px-3 py-2 font-medium text-[var(--ink)]">{e.title}</td>
-                      <td className="px-3 py-2 text-xs text-[var(--ink-muted)]">
+                      <td className="break-words px-2 py-2 font-medium text-[var(--ink)] sm:px-3">
+                        {e.title}
+                      </td>
+                      <td className="hidden break-words px-2 py-2 text-xs text-[var(--ink-muted)] sm:table-cell sm:px-3">
                         {e.location}
                       </td>
-                      <td className="px-3 py-2 text-right">
+                      <td className="px-2 py-2 text-right sm:px-3">
                         <Link
                           className="text-xs font-semibold text-[var(--accent)] hover:underline"
                           href={`/events/${e.slug}`}
@@ -395,9 +400,9 @@ export default function HomePage() {
       </section>
 
       {/* Mission strip */}
-      <section className="border-b border-[var(--border)] bg-[var(--surface)] py-8">
-        <Container wide>
-          <div className="grid gap-6 lg:grid-cols-3">
+      <section className="min-w-0 border-b border-[var(--border)] bg-[var(--surface)] py-8">
+        <Container wide className="min-w-0">
+          <div className="grid min-w-0 gap-6 lg:grid-cols-3">
             <div className="lg:col-span-2">
               <h2 className="font-heading text-2xl font-bold text-[var(--ink)]">
                 Mission &amp; story
@@ -443,8 +448,8 @@ export default function HomePage() {
       </section>
 
       {/* CTA */}
-      <section className="bg-[var(--cta-bg)] py-12 text-[var(--cta-fg)]">
-        <Container wide className="flex flex-col items-center text-center">
+      <section className="min-w-0 bg-[var(--cta-bg)] py-12 text-[var(--cta-fg)]">
+        <Container wide className="flex min-w-0 flex-col items-center px-4 text-center sm:px-6">
           <h2 className="font-heading text-2xl font-bold sm:text-3xl">
             Ready to rise with us?
           </h2>
