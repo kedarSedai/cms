@@ -1,0 +1,9 @@
+{
+  "name": "rising-mvps-backend",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Placeholder workspace for Strapi, custom API, or serverless functions.",
+  "scripts": {
+    "dev": "echo \"Add Strapi (npx create-strapi-app@latest) or your API here.\""
+  }
+}

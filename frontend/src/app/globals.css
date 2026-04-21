@@ -1,0 +1,100 @@
+@import "tailwindcss";
+
+/* Class-based dark mode for next-themes (`class` on <html>) */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Simple dual palette: neutrals + one accent. Legacy names (--coral, --teal, etc.)
+   map to the same accent so existing pages pick up light/dark without a full rewrite. */
+:root {
+  --cream: #f1f5f9;
+  --surface: #ffffff;
+  --surface-2: #f8fafc;
+  --ink: #0f172a;
+  --ink-soft: #475569;
+  --ink-muted: #64748b;
+  --border: rgba(15, 23, 42, 0.1);
+  --header-bg: #0f172a;
+  --header-fg: #f8fafc;
+  --header-muted: #94a3b8;
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --accent-fg: #ffffff;
+  --sun: #e2e8f0;
+  --coral: var(--accent);
+  --teal: var(--accent);
+  --background: var(--cream);
+  --foreground: var(--ink);
+  --cta-bg: #0f172a;
+  --cta-fg: #f8fafc;
+  --cta-muted: rgba(248, 250, 252, 0.75);
+  --code-bg: rgba(15, 23, 42, 0.06);
+}
+
+.dark {
+  --cream: #020617;
+  --surface: #0f172a;
+  --surface-2: #1e293b;
+  --ink: #f1f5f9;
+  --ink-soft: #cbd5e1;
+  --ink-muted: #94a3b8;
+  --border: rgba(248, 250, 252, 0.08);
+  --header-bg: #020617;
+  --header-fg: #f8fafc;
+  --header-muted: #94a3b8;
+  --accent: #60a5fa;
+  --accent-hover: #3b82f6;
+  --accent-fg: #020617;
+  --sun: #334155;
+  --coral: var(--accent);
+  --teal: var(--accent);
+  --background: var(--cream);
+  --foreground: var(--ink);
+  --cta-bg: #020617;
+  --cta-fg: #f8fafc;
+  --cta-muted: rgba(248, 250, 252, 0.75);
+  --code-bg: rgba(248, 250, 252, 0.08);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-dm-sans);
+  --font-heading: var(--font-nunito);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-dm-sans), system-ui, sans-serif;
+}
+
+.font-heading {
+  font-family: var(--font-nunito), var(--font-dm-sans), system-ui, sans-serif;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.focus\:not-sr-only:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: inherit;
+  margin: inherit;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
